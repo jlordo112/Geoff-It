@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
+import android.widget.TextView;
+
+import java.util.Timer;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -16,6 +19,15 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
     }
+}
+
+public void countdown() {
+    Timer countdownTimer = new Timer();
+    TextView countdownLabel = findViewById(R.id.countdown);
+    countdownLabel.setText("3");
+
+
 
 }
