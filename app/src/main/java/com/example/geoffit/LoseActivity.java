@@ -11,17 +11,6 @@ public class LoseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Button startButton = findViewById(R.id.playAgainButton);
-        startButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startGame();
-            }
-        });
-    }
-    private void startGame() {
-        Intent gameIntent = new Intent(this, GameActivity.class);
-        startActivity(gameIntent);
-
+        setContentView(R.layout.activity_lose);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.geoffit;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,7 +23,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         final TextView countdownLabel = findViewById(R.id.countdown);
-        new CountDownTimer(5000, 1000) {
+        new CountDownTimer(3000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 countdownLabel.setText("" + (millisUntilFinished / 1000 + 1));
@@ -35,7 +36,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void play() {
-
+        Intent loseIntent = new Intent(this, LoseActivity.class);
+        startActivity(loseIntent);
     }
 }
 
