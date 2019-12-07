@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -16,13 +17,19 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity {
-    @Override
+
+    String[] tasks = {"tap", "geoff", "shake"};
+    int score = 0;
+    Timer taskTimer;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         final TextView countdownLabel = findViewById(R.id.countdown);
+        countdownLabel.setVisibility(View.VISIBLE);
         new CountDownTimer(3000, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -30,12 +37,42 @@ public class GameActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-                play();
+                countdownLabel.setVisibility(View.GONE);
+                round();
             }
         }.start();
     }
 
-    private void play() {
+    private void newTask() {
+        ConstraintLayout task = findViewById(R.id.tapLayout);
+        task.setVisibility(View.VISIBLE);
+
+    }
+
+    public void tapped(View view) {
+        success();
+    }
+
+    private void success() {
+        taskTimer.cancel();
+        score++;
+        round();
+    }
+
+    private void round() {
+        newTask();
+        taskTimer = new Timer();
+        taskTimer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                lose();
+            }
+        }, 2000);
+        //update screen with random task
+        //start countdown, if finishes lose
+    }
+    private void lose() {
         Intent loseIntent = new Intent(this, LoseActivity.class);
         startActivity(loseIntent);
     }
