@@ -45,7 +45,7 @@ public class LoseActivity extends AppCompatActivity {
     private void textChange() {
         NewText = (TextView)findViewById(R.id.insultBox);
         TheScore = (TextView)findViewById(R.id.theScore);
-        TheScore.setText(scored);
+        TheScore.setText("" + scored);
         double x = (int)(Math.random()*((3-1)+1))+1;
         if (x == 1) {
             NewText.setText("Geoff would have scored at least " + (scored + 1));
