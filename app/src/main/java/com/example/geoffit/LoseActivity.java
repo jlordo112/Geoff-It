@@ -30,9 +30,9 @@ public class LoseActivity extends AppCompatActivity {
                 goMain();
             }
         });
-        textChange();
         Intent intent = getIntent();
         scored = intent.getIntExtra("score", 0);
+        textChange();
     }
     private void startGame() {
         Intent gameIntent = new Intent(this, GameActivity.class);
