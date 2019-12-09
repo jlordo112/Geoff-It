@@ -1,5 +1,6 @@
 package com.example.geoffit;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LoseActivity extends AppCompatActivity {
 
+    int highScore;
     TextView newText;
     TextView theScore;
     int scored;
@@ -36,10 +38,12 @@ public class LoseActivity extends AppCompatActivity {
     }
     private void startGame() {
         Intent gameIntent = new Intent(this, GameActivity.class);
+        gameIntent.putExtra("lastScore", scored);
         startActivity(gameIntent);
     }
     private void goMain() {
         Intent gameIntent = new Intent(this, MainActivity.class);
+        gameIntent.putExtra("lastScore", scored);
         startActivity(gameIntent);
     }
     private void textChange() {

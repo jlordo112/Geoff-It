@@ -21,6 +21,9 @@ import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity {
 
+    int scored;
+    TextView theText;
+    private static int highScores = 0;
     String[] tasks = {"tap", "shake", "geoff"};
     int score = 0;
     Timer taskTimer;
@@ -31,6 +34,10 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         final TextView countdownLabel = findViewById(R.id.countdown);
         countdownLabel.setVisibility(View.VISIBLE);
+
+        Intent intent = getIntent();
+        scored = intent.getIntExtra("lastScore", 0);
+
         new CountDownTimer(3000, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -85,11 +92,14 @@ public class GameActivity extends AppCompatActivity {
                 lose();
             }
         }, 2000);
-
     }
     private void lose() {
         Intent loseIntent = new Intent(this, LoseActivity.class);
-        loseIntent.putExtra("score", score);
+        if (scored > score) {
+            loseIntent.putExtra("score", scored);
+        } else {
+            loseIntent.putExtra("score", score);
+        }
         startActivity(loseIntent);
     }
 }
