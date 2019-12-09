@@ -2,6 +2,7 @@ package com.example.geoffit;
 
 import android.content.Intent;
 import android.hardware.SensorManager;
+import android.media.MediaRecorder;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,7 +28,9 @@ public class GameActivity extends AppCompatActivity implements ShakeDetector.Lis
     String[] tasks = {"tap", "shake", "geoff"};
     int score = 0;
     Timer taskTimer;
+    Timer listenTimer;
     boolean shouldShake;
+    MediaRecorder recorder = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +53,14 @@ public class GameActivity extends AppCompatActivity implements ShakeDetector.Lis
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         ShakeDetector sd = new ShakeDetector(this);
         sd.start(sensorManager);
+
     }
 
     private void newTask() {
         findViewById(R.id.tapLayout).setVisibility(View.GONE);
         findViewById(R.id.shakeLayout).setVisibility(View.GONE);
         findViewById(R.id.geoffLayout).setVisibility(View.GONE);
-
         shouldShake = false;
-
         String task = tasks[(int) (Math.random()*tasks.length)];
         if (task.equals("tap")) {
             findViewById(R.id.tapLayout).setVisibility(View.VISIBLE);
@@ -65,7 +68,16 @@ public class GameActivity extends AppCompatActivity implements ShakeDetector.Lis
             findViewById(R.id.shakeLayout).setVisibility(View.VISIBLE);
             shouldShake = true;
         } else if (task.equals("geoff")) {
-            findViewById(R.id.geoffLayout).setVisibility(View.VISIBLE);;
+            findViewById(R.id.geoffLayout).setVisibility(View.VISIBLE);
+            startRecording();
+            listenTimer = new Timer();
+            listenTimer.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    listen();
+                }
+            }, 0, 10);
         }
     }
 
@@ -80,9 +92,14 @@ public class GameActivity extends AppCompatActivity implements ShakeDetector.Lis
     }
 
     private void round() {
-        TextView scoreDisplay = findViewById(R.id.score);
-        scoreDisplay.setText("" + score);
-        newTask();
+        final TextView scoreDisplay = findViewById(R.id.score);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                scoreDisplay.setText("" + score);
+                newTask();
+            }
+        });
         taskTimer = new Timer();
         taskTimer.schedule(new TimerTask() {
 
@@ -90,7 +107,7 @@ public class GameActivity extends AppCompatActivity implements ShakeDetector.Lis
             public void run() {
                 lose();
             }
-        }, 2000);
+        }, 1000);
 
     }
     private void lose() {
@@ -101,9 +118,48 @@ public class GameActivity extends AppCompatActivity implements ShakeDetector.Lis
 
     @Override
     public void hearShake() {
-        System.out.println("shooketh");
         if (shouldShake) {
             success();
+        }
+    }
+
+    private void listen() {
+        if (recorder.getMaxAmplitude() > 20000) {
+            System.out.println("geoffed");
+            stopRecording();
+            listenTimer.cancel();
+            success();
+        }
+    }
+
+    private void startRecording() {
+        recorder = new MediaRecorder();
+        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        recorder.setOutputFile("/dev/null");
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+        try {
+            recorder.prepare();
+        } catch (IOException e) {
+            Log.e("whoopsie", "prepare() failed");
+        }
+
+        recorder.start();
+    }
+
+    private void stopRecording() {
+        recorder.stop();
+        recorder.release();
+        recorder = null;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (recorder != null) {
+            recorder.release();
+            recorder = null;
         }
     }
 }
