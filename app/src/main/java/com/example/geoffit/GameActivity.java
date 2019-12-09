@@ -2,6 +2,7 @@ package com.example.geoffit;
 
 import android.content.Intent;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 
@@ -28,6 +29,7 @@ public class GameActivity extends AppCompatActivity implements ShakeDetector.Lis
     Timer listenTimer;
     boolean shouldShake;
     MediaRecorder recorder = null;
+    MediaPlayer good = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class GameActivity extends AppCompatActivity implements ShakeDetector.Lis
                 round();
             }
         }.start();
-
+        good = MediaPlayer.create(this, R.raw.good);
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         ShakeDetector sd = new ShakeDetector(this);
         sd.start(sensorManager);
@@ -90,6 +92,7 @@ public class GameActivity extends AppCompatActivity implements ShakeDetector.Lis
     }
 
     private void success() {
+        good.start();
         taskTimer.cancel();
         score++;
         round();
