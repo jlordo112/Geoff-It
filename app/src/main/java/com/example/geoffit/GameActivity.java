@@ -120,9 +120,11 @@ public class GameActivity extends AppCompatActivity implements ShakeDetector.Lis
     private void lose() {
         Intent loseIntent = new Intent(this, LoseActivity.class);
         if (scored > score) {
-            loseIntent.putExtra("score", scored);
+            loseIntent.putExtra("score", score);
+            loseIntent.putExtra("lastScore", scored);
         } else {
             loseIntent.putExtra("score", score);
+            loseIntent.putExtra("lastScore", score);
         }
         startActivity(loseIntent);
     }
