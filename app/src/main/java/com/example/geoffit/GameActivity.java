@@ -60,6 +60,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void round() {
+        TextView scoreDisplay = findViewById(R.id.score);
+        scoreDisplay.setText("" + score);
         newTask();
         taskTimer = new Timer();
         taskTimer.schedule(new TimerTask() {
@@ -69,11 +71,11 @@ public class GameActivity extends AppCompatActivity {
                 lose();
             }
         }, 2000);
-        //update screen with random task
-        //start countdown, if finishes lose
+
     }
     private void lose() {
         Intent loseIntent = new Intent(this, LoseActivity.class);
+        loseIntent.putExtra("score", score);
         startActivity(loseIntent);
     }
 }

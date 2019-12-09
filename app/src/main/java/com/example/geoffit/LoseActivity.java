@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LoseActivity extends AppCompatActivity {
 
-    TextView NewText;
-    TextView TheScore;
+    TextView newText;
+    TextView theScore;
     int scored;
 
     @Override
@@ -30,9 +30,9 @@ public class LoseActivity extends AppCompatActivity {
                 goMain();
             }
         });
-        textChange();
         Intent intent = getIntent();
         scored = intent.getIntExtra("score", 0);
+        textChange();
     }
     private void startGame() {
         Intent gameIntent = new Intent(this, GameActivity.class);
@@ -43,16 +43,16 @@ public class LoseActivity extends AppCompatActivity {
         startActivity(gameIntent);
     }
     private void textChange() {
-        NewText = (TextView)findViewById(R.id.insultBox);
-        TheScore = (TextView)findViewById(R.id.theScore);
-        TheScore.setText("" + scored);
+        newText = (TextView)findViewById(R.id.insultBox);
+        theScore = (TextView)findViewById(R.id.theScore);
+        theScore.setText("" + scored);
         double x = (int)(Math.random()*((3-1)+1))+1;
         if (x == 1) {
-            NewText.setText("Geoff would have scored at least " + (scored + 1));
+            newText.setText("Geoff would have scored at least " + (scored + 1));
         } else if (x == 2) {
-            NewText.setText("Bruhhhh, that's really the best you can do???");
+            newText.setText("Bruhhhh, that's really the best you can do???");
         } else {
-            NewText.setText("This is why your parents don't love you");
+            newText.setText("This is why your parents don't love you");
         }
     }
 }
