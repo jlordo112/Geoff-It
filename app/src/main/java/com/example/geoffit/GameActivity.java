@@ -21,9 +21,10 @@ import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity {
 
-    String[] tasks = {"tap", "geoff", "shake"};
+    String[] tasks = {"tap", "shake", "geoff"};
     int score = 0;
     Timer taskTimer;
+    boolean shouldShake;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,9 +45,22 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void newTask() {
-        ConstraintLayout task = findViewById(R.id.tapLayout);
-        task.setVisibility(View.VISIBLE);
+        findViewById(R.id.tapLayout).setVisibility(View.GONE);
+        findViewById(R.id.shakeLayout).setVisibility(View.GONE);
+        findViewById(R.id.geoffLayout).setVisibility(View.GONE);
 
+        shouldShake = false;
+
+        String task = tasks[(int) Math.random()*tasks.length];
+
+        if (task.equals("tap")) {
+            findViewById(R.id.tapLayout).setVisibility(View.VISIBLE);
+        } else if (task.equals("shake")) {
+            findViewById(R.id.shakeLayout).setVisibility(View.VISIBLE);
+            shouldShake = true;
+        } else if (task.equals("geoff")) {
+            findViewById(R.id.geoffLayout).setVisibility(View.VISIBLE);;
+        }
     }
 
     public void tapped(View view) {
