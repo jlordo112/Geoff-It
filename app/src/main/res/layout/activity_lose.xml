@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EC8C87"
     tools:context=".LoseActivity">
 
     <Button
         android:id="@+id/playAgainButton"
         android:layout_width="165dp"
         android:layout_height="59dp"
+        android:background="#B7E91E63"
         android:text="PLAY AGAIN"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="@android:color/white"
         android:textSize="25sp"
         android:typeface="sans"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -95,8 +98,10 @@
         android:layout_marginEnd="343dp"
         android:layout_marginRight="343dp"
         android:layout_marginBottom="3dp"
+        android:background="#B7E91E63"
         android:gravity="center"
         android:text="Home"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

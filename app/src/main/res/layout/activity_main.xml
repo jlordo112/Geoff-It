@@ -4,32 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EC8C87"
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/highScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
-        android:layout_marginLeft="11dp"
-        android:layout_marginTop="123dp"
-        android:layout_marginEnd="172dp"
-        android:layout_marginRight="172dp"
-        android:layout_marginBottom="150dp"
-        android:text="0"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/startButton"
-        app:layout_constraintVertical_bias="0.4" />
-
-    <TextView
         android:id="@+id/textView"
-        android:layout_width="255dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="132dp"
-        android:layout_marginLeft="132dp"
+        android:layout_width="252dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginLeft="150dp"
         android:layout_marginTop="123dp"
         android:layout_marginEnd="11dp"
         android:layout_marginRight="11dp"
@@ -40,18 +23,44 @@
         app:layout_constraintEnd_toStartOf="@+id/highScore"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startButton"
-        app:layout_constraintVertical_bias="0.482" />
+        app:layout_constraintVertical_bias="0.685" />
+
+    <TextView
+        android:id="@+id/highScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="123dp"
+        android:layout_marginEnd="172dp"
+        android:layout_marginRight="172dp"
+        android:layout_marginBottom="168dp"
+        android:text="0"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/startButton"
+        app:layout_constraintVertical_bias="0.633" />
 
     <Button
         android:id="@+id/startButton"
         android:layout_width="296dp"
         android:layout_height="146dp"
+        android:background="#B7E91E63"
+        android:ellipsize="middle"
+        android:gravity="center"
         android:text="Geoff It!"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+        android:textColor="#ffffff"
+        android:typeface="serif"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.564" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -59,12 +68,14 @@
         android:layout_height="242dp"
         android:layout_marginEnd="56dp"
         android:layout_marginRight="56dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.888"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.077"
+        app:layout_constraintVertical_bias="0.059"
         app:srcCompat="@drawable/geoff" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
