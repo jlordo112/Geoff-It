@@ -1,10 +1,12 @@
 package com.example.geoffit;
 
 import android.content.Intent;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.seismic.ShakeDetector;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,13 +21,14 @@ import android.widget.TextView;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements ShakeDetector.Listener {
 
     String[] tasks = {"tap", "shake", "geoff"};
     int score = 0;
     Timer taskTimer;
     boolean shouldShake;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
@@ -42,6 +45,10 @@ public class GameActivity extends AppCompatActivity {
                 round();
             }
         }.start();
+
+        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        ShakeDetector sd = new ShakeDetector(this);
+        sd.start(sensorManager);
     }
 
     private void newTask() {
@@ -51,8 +58,7 @@ public class GameActivity extends AppCompatActivity {
 
         shouldShake = false;
 
-        String task = tasks[(int) Math.random()*tasks.length];
-
+        String task = tasks[(int) (Math.random()*tasks.length)];
         if (task.equals("tap")) {
             findViewById(R.id.tapLayout).setVisibility(View.VISIBLE);
         } else if (task.equals("shake")) {
@@ -90,7 +96,15 @@ public class GameActivity extends AppCompatActivity {
     private void lose() {
         Intent loseIntent = new Intent(this, LoseActivity.class);
         loseIntent.putExtra("score", score);
-        startActivity(loseIntent);
+        //startActivity(loseIntent);
+    }
+
+    @Override
+    public void hearShake() {
+        System.out.println("shooketh");
+        if (shouldShake) {
+            success();
+        }
     }
 }
 
