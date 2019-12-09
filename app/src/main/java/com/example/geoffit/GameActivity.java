@@ -25,6 +25,9 @@ import java.util.TimerTask;
 
 public class GameActivity extends AppCompatActivity implements ShakeDetector.Listener {
 
+    int scored;
+    TextView theText;
+    private static int highScores = 0;
     String[] tasks = {"tap", "shake", "geoff"};
     int score = 0;
     Timer taskTimer;
@@ -38,6 +41,10 @@ public class GameActivity extends AppCompatActivity implements ShakeDetector.Lis
         setContentView(R.layout.activity_game);
         final TextView countdownLabel = findViewById(R.id.countdown);
         countdownLabel.setVisibility(View.VISIBLE);
+
+        Intent intent = getIntent();
+        scored = intent.getIntExtra("lastScore", 0);
+
         new CountDownTimer(3000, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -60,8 +67,11 @@ public class GameActivity extends AppCompatActivity implements ShakeDetector.Lis
         findViewById(R.id.tapLayout).setVisibility(View.GONE);
         findViewById(R.id.shakeLayout).setVisibility(View.GONE);
         findViewById(R.id.geoffLayout).setVisibility(View.GONE);
+
         shouldShake = false;
+
         String task = tasks[(int) (Math.random()*tasks.length)];
+
         if (task.equals("tap")) {
             findViewById(R.id.tapLayout).setVisibility(View.VISIBLE);
         } else if (task.equals("shake")) {
@@ -112,10 +122,13 @@ public class GameActivity extends AppCompatActivity implements ShakeDetector.Lis
     }
     private void lose() {
         Intent loseIntent = new Intent(this, LoseActivity.class);
-        loseIntent.putExtra("score", score);
-        //startActivity(loseIntent);
+        if (scored > score) {
+            loseIntent.putExtra("score", scored);
+        } else {
+            loseIntent.putExtra("score", score);
+        }
+        startActivity(loseIntent);
     }
-
     @Override
     public void hearShake() {
         if (shouldShake) {
