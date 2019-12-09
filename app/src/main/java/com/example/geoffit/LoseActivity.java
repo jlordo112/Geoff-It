@@ -15,6 +15,7 @@ public class LoseActivity extends AppCompatActivity {
     TextView newText;
     TextView theScore;
     int scored;
+    int lastScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,16 +35,17 @@ public class LoseActivity extends AppCompatActivity {
         });
         Intent intent = getIntent();
         scored = intent.getIntExtra("score", 0);
+        lastScore = intent.getIntExtra("lastScore", 0);
         textChange();
     }
     private void startGame() {
         Intent gameIntent = new Intent(this, GameActivity.class);
-        gameIntent.putExtra("lastScore", scored);
+        gameIntent.putExtra("lastScore", lastScore);
         startActivity(gameIntent);
     }
     private void goMain() {
         Intent gameIntent = new Intent(this, MainActivity.class);
-        gameIntent.putExtra("lastScore", scored);
+        gameIntent.putExtra("lastScore", lastScore);
         startActivity(gameIntent);
     }
     private void textChange() {
