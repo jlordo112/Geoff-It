@@ -5,15 +5,9 @@ import android.hardware.SensorManager;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.squareup.seismic.ShakeDetector;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
@@ -171,6 +165,7 @@ public class GameActivity extends AppCompatActivity implements ShakeDetector.Lis
     public void onStop() {
         super.onStop();
         if (recorder != null) {
+            listenTimer.cancel();
             recorder.release();
             recorder = null;
         }
