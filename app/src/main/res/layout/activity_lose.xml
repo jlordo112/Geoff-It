@@ -39,14 +39,14 @@
 
     <TextView
         android:id="@+id/insultBox"
-        android:layout_width="411dp"
-        android:layout_height="124dp"
+        android:layout_width="376dp"
+        android:layout_height="104dp"
         android:layout_marginTop="183dp"
         android:layout_marginBottom="34dp"
         android:gravity="center"
         android:text="Insult"
-        android:textSize="30sp"
-        app:fontFamily="cursive"
+        android:textSize="35sp"
+        app:fontFamily="casual"
         app:layout_constraintBottom_toTopOf="@+id/playAgainButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

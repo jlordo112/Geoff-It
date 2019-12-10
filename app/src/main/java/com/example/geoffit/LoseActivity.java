@@ -40,7 +40,7 @@ public class LoseActivity extends AppCompatActivity {
         });
         Intent intent = getIntent();
         scored = intent.getIntExtra("score", 0);
-        lastScore = intent.getIntExtra("lastScore", 0);
+        //lastScore = intent.getIntExtra("lastScore", 0);
         textChange();
     }
     private void startGame() {

@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private String [] permissions = {Manifest.permission.RECORD_AUDIO};
 
     TextView theText;
-    private static int highScores = 0;
+    public static int highScores = 0;
     int scored;
     int lastScore;
 
@@ -47,10 +47,6 @@ public class MainActivity extends AppCompatActivity {
     }
     public void updateScore() {
         theText = (TextView)findViewById(R.id.highScore);
-        if (scored > highScores) {
-            highScores = scored;
-            theText.setText("" + highScores);
-        }
         theText.setText("" + highScores);
     }
 

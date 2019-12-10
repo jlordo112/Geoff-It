@@ -23,8 +23,6 @@ import java.util.TimerTask;
 public class GameActivity extends AppCompatActivity implements ShakeDetector.Listener {
 
     int scored;
-    TextView theText;
-    private static int highScores = 0;
     String[] tasks = {"tap", "shake", "geoff"};
     int score = 0;
     Timer taskTimer;
@@ -60,6 +58,7 @@ public class GameActivity extends AppCompatActivity implements ShakeDetector.Lis
         good = MediaPlayer.create(this, R.raw.good);
         SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         ShakeDetector sd = new ShakeDetector(this);
+        sd.setSensitivity(ShakeDetector.SENSITIVITY_LIGHT);
         sd.start(sensorManager);
 
     }
@@ -97,8 +96,8 @@ public class GameActivity extends AppCompatActivity implements ShakeDetector.Lis
     }
 
     private void success() {
-        good.start();
         taskTimer.cancel();
+        good.start();
         score++;
         round();
     }
@@ -119,18 +118,16 @@ public class GameActivity extends AppCompatActivity implements ShakeDetector.Lis
             public void run() {
                 lose();
             }
-        }, 1000);
+        }, 2000);
 
     }
     private void lose() {
         Intent loseIntent = new Intent(this, LoseActivity.class);
-        if (scored > score) {
-            loseIntent.putExtra("score", score);
-            loseIntent.putExtra("lastScore", scored);
-        } else {
-            loseIntent.putExtra("score", score);
-            loseIntent.putExtra("lastScore", score);
+        taskTimer.cancel();
+        if (score > MainActivity.highScores) {
+            MainActivity.highScores = score;
         }
+        loseIntent.putExtra("score", score);
         startActivity(loseIntent);
     }
     @Override
@@ -141,8 +138,7 @@ public class GameActivity extends AppCompatActivity implements ShakeDetector.Lis
     }
 
     private void listen() {
-        if (recorder.getMaxAmplitude() > 20000) {
-            System.out.println("geoffed");
+        if (recorder.getMaxAmplitude() > 12000) {
             stopRecording();
             listenTimer.cancel();
             success();
@@ -174,6 +170,7 @@ public class GameActivity extends AppCompatActivity implements ShakeDetector.Lis
     @Override
     public void onStop() {
         super.onStop();
+        taskTimer.cancel();
         if (recorder != null) {
             listenTimer.cancel();
             recorder.release();
